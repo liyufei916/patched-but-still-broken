@@ -17,6 +17,26 @@
 pip install -r requirements.txt
 ```
 
+### 安装中文字体（必需）
+
+为了正确显示图片中的中文字幕，需要安装支持中文的字体：
+
+**Ubuntu/Debian:**
+```bash
+sudo apt-get install fonts-noto-cjk
+```
+
+**Fedora/RHEL:**
+```bash
+sudo dnf install google-noto-sans-cjk-fonts
+```
+
+**macOS:**
+系统已自带 PingFang 字体，无需额外安装。
+
+**Windows:**
+系统已自带微软雅黑字体，无需额外安装。
+
 ## 配置
 
 1. 复制 `.env.example` 为 `.env`
