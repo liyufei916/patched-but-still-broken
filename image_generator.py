@@ -132,10 +132,7 @@ class ImageGenerator:
             
             img_width, img_height = img.size
             
-            try:
-                font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 40)
-            except:
-                font = ImageFont.load_default()
+            font = self._get_chinese_font(40)
             
             max_width = img_width - 100
             lines = self._wrap_text(text, font, max_width, draw)
@@ -194,3 +191,29 @@ class ImageGenerator:
             lines.append(current_line)
         
         return lines
+    
+    def _get_chinese_font(self, size: int = 40):
+        chinese_fonts = [
+            "/usr/share/fonts/truetype/noto/NotoSansCJK-Regular.ttc",
+            "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
+            "/usr/share/fonts/truetype/droid/DroidSansFallbackFull.ttf",
+            "/usr/share/fonts/truetype/wqy/wqy-microhei.ttc",
+            "/usr/share/fonts/truetype/arphic/uming.ttc",
+            "/System/Library/Fonts/PingFang.ttc",
+            "C:\\Windows\\Fonts\\msyh.ttc",
+            "C:\\Windows\\Fonts\\simsun.ttc",
+        ]
+        
+        for font_path in chinese_fonts:
+            if os.path.exists(font_path):
+                try:
+                    return ImageFont.truetype(font_path, size)
+                except Exception as e:
+                    print(f"无法加载字体 {font_path}: {e}")
+                    continue
+        
+        print("警告: 未找到支持中文的字体,使用默认字体")
+        try:
+            return ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", size)
+        except:
+            return ImageFont.load_default()
